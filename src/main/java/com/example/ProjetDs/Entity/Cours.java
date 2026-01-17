@@ -2,6 +2,10 @@ package com.example.ProjetDs.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @Entity
 public class Cours {
 
@@ -18,6 +22,10 @@ public class Cours {
     @Column(length = 50)
     private String description;
 
+
+    @OneToMany(mappedBy = "cours")
+    private Collection<Inscription> inscriptions= new ArrayList<Inscription>();;
+
     @ManyToOne
     private Formateur formateur;
 
@@ -25,7 +33,7 @@ public class Cours {
         return code;
     }
 
-
+    public Cours (){}
 
     public Cours(String code, String titre, String description) {
         this.code = code;
@@ -70,4 +78,5 @@ public class Cours {
                 ", description='" + description + '\'' +
                 '}';
     }
+
 }
