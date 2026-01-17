@@ -1,5 +1,9 @@
 package com.example.ProjetDs.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -8,13 +12,9 @@ import java.util.List;
 
 @Entity
 public class Cours {
-
-
-    @Id @GeneratedValue (strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(length = 50)
-    private String code;
 
     @Column(length = 50)
     private String titre;
@@ -23,26 +23,41 @@ public class Cours {
     private String description;
 
 
-    @OneToMany(mappedBy = "cours")
-    private Collection<Inscription> inscriptions= new ArrayList<Inscription>();;
+    @OneToMany(mappedBy = "cours", cascade = CascadeType.ALL)
+    @JsonManagedReference("cours-notes")
+
+    private List<Note> notes;
+
+    @OneToMany(mappedBy = "cours", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Seance> seances = new ArrayList<>();
 
     @ManyToOne
+    @JoinColumn(name = "formateur_id")
+    @JsonIgnoreProperties("cours")
+
     private Formateur formateur;
 
-    public String getCode() {
-        return code;
+    @ManyToOne
+    @JsonBackReference
+    private SessionPedagogique sessionPedagogique;
+
+
+    public Cours() {
     }
 
-    public Cours (){}
-
-    public Cours(String code, String titre, String description) {
-        this.code = code;
+    public Cours(String titre, String description) {
         this.titre = titre;
         this.description = description;
+
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitre() {
@@ -61,22 +76,36 @@ public class Cours {
         this.description = description;
     }
 
-    public Long getId() {
-        return id;
+    public List<Note> getNotes() {
+        return notes;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
-    @Override
-    public String toString() {
-        return "Cours{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", titre='" + titre + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public List<Seance> getSeances() {
+        return seances;
+    }
+
+    public void setSeances(List<Seance> seances) {
+        this.seances = seances;
+    }
+
+    public Formateur getFormateur() {
+        return formateur;
+    }
+
+    public void setFormateur(Formateur formateur) {
+        this.formateur = formateur;
+    }
+
+    public SessionPedagogique getSessionPedagogique() {
+        return sessionPedagogique;
+    }
+
+    public void setSessionPedagogique(SessionPedagogique sessionPedagogique) {
+        this.sessionPedagogique = sessionPedagogique;
     }
 
 }

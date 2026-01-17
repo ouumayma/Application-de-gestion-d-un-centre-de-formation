@@ -45,18 +45,18 @@ public class FormateurService {
         return formateurRepository.save(formateur);
     }
 
-    public Formateur associerCours(Long formateurId, Long coursId) {
-        Formateur formateur = formateurRepository.findById(formateurId)
-                .orElseThrow(() -> new RuntimeException("Formateur non trouvé"));
-
-        Cours cours = coursRepository.findById(coursId)
-                .orElseThrow(() -> new RuntimeException("Cours non trouvé"));
-
-        cours.setFormateur(formateur);
-        coursRepository.save(cours);
-
-        return formateur;
-    }
+//    public Formateur associerCours(Long formateurId, Long coursId) {
+//        Formateur formateur = formateurRepository.findById(formateurId)
+//                .orElseThrow(() -> new RuntimeException("Formateur non trouvé"));
+//
+//        Cours cours = coursRepository.findById(coursId)
+//                .orElseThrow(() -> new RuntimeException("Cours non trouvé"));
+//
+//        cours.setFormateur(formateur);
+//        coursRepository.save(cours);
+//
+//        return formateur;
+//    }
 
     @Transactional
     public Formateur getFormateurById(Long id) {
@@ -69,16 +69,16 @@ public class FormateurService {
         return formateurRepository.findAll();
     }
 
-    @Transactional
-    public List<Formateur> getFormateursBySpecialite(String specialite) {
-        return formateurRepository.findBySpecialite(specialite);
-    }
+//    @Transactional
+//    public List<Formateur> getFormateursBySpecialite(String specialite) {
+//        return formateurRepository.findBySpecialite(specialite);
+//    }
 
-    @Transactional
-    public List<Cours> getCoursFormateur(Long formateurId) {
-        if (!formateurRepository.existsById(formateurId)) {
-            throw new RuntimeException("Formateur non trouvé");
-        }
-        return coursRepository.findByFormateurId(formateurId);
-    }
+//    @Transactional
+//    public List<Cours> getCoursFormateur(Long formateurId) {
+//        if (!formateurRepository.existsById(formateurId)) {
+//            throw new RuntimeException("Formateur non trouvé");
+//        }
+//        return coursRepository.findByFormateurId(formateurId);
+//    }
 }

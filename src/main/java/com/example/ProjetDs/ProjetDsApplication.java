@@ -19,42 +19,6 @@ public class ProjetDsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetDsApplication.class, args);
 	}
-	@Bean
-	CommandLineRunner init(
-			EtudiantRepository etudiantRepo,
-			AdminRepository adminRepo
-	) {
-		return args -> {
-
-			Admin admin = new Admin(
-					"admin@gmail.com",
-					"1234"
-			);
-
-			adminRepo.save(admin);
-
-			Etudiant e1 = new Etudiant(
-					"Ali",
-					"Ben Salah",
-					"ali@gmail.com",
-					"1234",
-					"12"
-			);
-
-			etudiantRepo.save(e1);
-
-			Etudiant etudiant = new Etudiant(
-					"Ali",
-					"Ben Salah",
-					"ali@gmail.com",
-					"1234",
-					"MAT2026"
-			);
-
-			etudiantRepo.save(etudiant);
-		};
-	}
-
 
 
 }
